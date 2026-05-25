@@ -1,23 +1,72 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+const { title, description = 'Colegio Experimental Hugo Dávila - Sitio Oficial' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/png" href="/images/HugoDavila.png" />
+  </head>
+  <body class="bg-gray-50 min-h-screen flex flex-col font-sans">
+    <!-- Header -->
+    <header class="bg-blue-900 text-white shadow-lg">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between">
+        <div class="flex items-center gap-4 mb-3 md:mb-0">
+          <img 
+            src="/images/HugoDavila.png" 
+            alt="Logo Colegio Hugo Dávila" 
+            class="w-14 h-14 object-contain rounded-full bg-white p-1 shadow-md"
+          />
+          <div>
+            <h1 class="text-xl md:text-2xl font-bold">Colegio Experimental Hugo Dávila</h1>
+            <p class="text-blue-200 text-sm italic">"Asesinos, las Ideas no se Matan"</p>
+          </div>
+        </div>
+        <nav>
+          <ul class="flex gap-6 text-sm md:text-base font-medium">
+            <li><a href="/" class="hover:text-yellow-300 transition-colors">Inicio</a></li>
+            <li><a href="/comunicados" class="hover:text-yellow-300 transition-colors">Comunicados</a></li>
+            <li><a href="/nosotros" class="hover:text-yellow-300 transition-colors">Nosotros</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-10 mt-12">
+      <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+        <div>
+          <h3 class="font-bold text-lg mb-3 text-yellow-400">Colegio Experimental Hugo Dávila</h3>
+          <p class="text-gray-400 text-sm">Formando líderes desde 1952</p>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg mb-3 text-yellow-400">Contacto</h3>
+          <p class="text-gray-400 text-sm">📍 José Carrasco s/n, Miraflores</p>
+          <p class="text-gray-400 text-sm">🏙️ La Paz, Bolivia</p>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg mb-3 text-yellow-400">Turnos</h3>
+          <p class="text-gray-400 text-sm">🌅 Turno Mañana: Lic. Juan Rivera</p>
+          <p class="text-gray-400 text-sm">🌇 Turno Tarde: Lic. Juan Iturri</p>
+        </div>
+      </div>
+      <div class="text-center mt-8 pt-6 border-t border-gray-800 text-sm text-gray-500">
+        <p>&copy; {new Date().getFullYear()} Colegio Experimental Hugo Dávila. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+  </body>
+</html>
