@@ -4,14 +4,12 @@ import MainLayout from '../../layouts/MainLayout.astro';
 export async function getStaticPaths() {
   const comunicados = await Astro.glob('../../content/comunicados/*.md');
   return comunicados.map(comunicado => {
-    // Obtener el contenido como texto crudo (Markdown)
     const contenido = comunicado.rawContent?.() || comunicado.compiledContent?.() || '';
     return {
       params: { slug: comunicado.file.split('/').pop()?.replace('.md', '') },
       props: {
         frontmatter: comunicado.frontmatter,
         contenido: contenido,
-        // Si la imagen está en frontmatter, la pasamos también
         image: comunicado.frontmatter.image || null,
       },
     };
@@ -22,27 +20,26 @@ const { frontmatter, contenido, image } = Astro.props;
 ---
 
 <MainLayout title={`${frontmatter.title} | Comunicados`}>
-  <article class="max-w-4xl mx-auto px-6 py-20">
-    <a href="/comunicados" class="text-[#C5A86D] text-sm uppercase tracking-wider mb-4 inline-block hover:underline">
+  <article class="max-w-4xl mx-auto px-6 py-20 text-gray-800 dark:text-gray-200">
+    <a href="/comunicados" class="text-[#C5A86D] dark:text-gold text-sm uppercase tracking-wider mb-4 inline-block hover:underline">
       ← Volver a comunicados
     </a>
-    <time class="text-sm text-gray-500 block mb-2">
+    <time class="text-sm text-gray-500 dark:text-gray-400 block mb-2">
       {new Date(frontmatter.date).toLocaleDateString('es-BO', {
         year: 'numeric', month: 'long', day: 'numeric'
       })}
     </time>
-    <h1 class="text-4xl md:text-5xl font-serif font-bold text-[#0A2342] mb-8">
+    <h1 class="text-4xl md:text-5xl font-serif font-bold text-[#0A2342] dark:text-white mb-8">
       {frontmatter.title}
     </h1>
     {image && (
       <img src={image} alt={frontmatter.title} 
            class="w-full h-64 object-cover rounded-2xl mb-8 shadow" />
     )}
-    <!-- Convertir saltos de línea y negritas básicas a HTML -->
-    <div class="text-gray-700 leading-relaxed" set:html={
+    <div class="text-gray-700 dark:text-gray-300 leading-relaxed" set:html={
       contenido
-        .trim()  // ← elimina espacios y saltos de línea sobrantes al inicio y final
-        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-[#0A2342]">$1</strong>')
+        .trim()
+        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-[#0A2342] dark:text-white">$1</strong>')
         .split('\n\n')
         .map(block => block.trim() ? `<p class="mb-4">${block.replace(/\n/g, '<br>')}</p>` : '')
         .join('')

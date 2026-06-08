@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Administración - Hugo Dávila</title>
+</head>
+<body>
+  <!-- Cargar el script de Netlify Identity -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  
+  <!-- Cargar Decap CMS (versión completa) -->
+  <script src="https://unpkg.com/decap-cms@3.0.7/dist/decap-cms.js"></script>
+  
+  <!-- Inicializar el CMS -->
+  <script>
+    // Inicializar CMS después de que los scripts se hayan cargado
+    if (window.CMS) {
+      CMS.init();
+    } else {
+      console.error('CMS no está disponible');
+    }
+  </script>
+</body>
+</html>

@@ -16,60 +16,59 @@ const { title, description = 'Colegio Experimental Hugo Dávila - Sitio Oficial'
     <title>{title}</title>
     <link rel="icon" type="image/png" href="/images/HugoDavila.png" />
     
-    <!-- Fuentes profesionales -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Spectral:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- AOS -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-      AOS.init({
-        duration: 800,
-        once: true,
-        offset: 100
-      });
+
+    <!-- AOS solo CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
     </script>
+  </head>
+  <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans antialiased transition-colors duration-300">
     
-    <!-- Header profesional con efecto glass -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 shadow-sm">
       <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <a href="/" class="flex items-center gap-4 group">
-          <div class="w-12 h-12 rounded-full bg-white border-2 border-navy-900 overflow-hidden p-1 shadow-md group-hover:scale-105 transition-transform duration-300">
-            <img 
-              src="/images/HugoDavila.png" 
-              alt="Logo Colegio Hugo Dávila" 
-              class="w-full h-full object-contain"
-            />
+          <div class="w-12 h-12 rounded-full bg-white dark:bg-gray-800 border-2 border-navy-900 dark:border-gold overflow-hidden p-1 shadow-md group-hover:scale-105 transition-transform duration-300">
+            <img src="/images/HugoDavila.png" alt="Logo" class="w-full h-full object-contain" />
           </div>
           <div>
-            <h1 class="text-lg font-serif font-bold text-navy-900 leading-tight">Colegio Experimental</h1>
-            <p class="text-xs text-navy-800 font-medium tracking-wide">HUGO DÁVILA</p>
+            <h1 class="text-lg font-serif font-bold text-navy-900 dark:text-white leading-tight">Colegio Experimental</h1>
+            <p class="text-xs text-navy-800 dark:text-gold font-medium tracking-wide">HUGO DÁVILA</p>
           </div>
         </a>
         
         <nav class="hidden md:flex items-center gap-8">
-          <a href="/" class="text-sm font-medium text-gray-600 hover:text-navy-900 transition-colors">Inicio</a>
-          <a href="/nosotros" class="text-sm font-medium text-gray-600 hover:text-navy-900 transition-colors">Nosotros</a>
-          <a href="/comunicados" class="text-sm font-medium text-gray-600 hover:text-navy-900 transition-colors">Comunicados</a>
-          <a href="/nosotros" class="text-sm font-medium text-gray-600 hover:text-navy-900 transition-colors">Contacto</a>
+          <a href="/" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-navy-900 dark:hover:text-gold transition-colors">Inicio</a>
+          <a href="/nosotros" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-navy-900 dark:hover:text-gold transition-colors">Nosotros</a>
+          <a href="/comunicados" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-navy-900 dark:hover:text-gold transition-colors">Comunicados</a>
+          <a href="/contacto" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-navy-900 dark:hover:text-gold transition-colors">Contacto</a>
         </nav>
         
-        <button class="md:hidden text-navy-900">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+        <div class="flex items-center gap-4">
+          <button id="themeToggle" class="relative w-12 h-6 rounded-full bg-gray-300 dark:bg-navy-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gold">
+            <span class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white dark:bg-gold shadow-md transform transition-transform duration-300 dark:translate-x-6 flex items-center justify-center text-xs">
+              <span class="block dark:hidden">☀️</span>
+              <span class="hidden dark:block">🌙</span>
+            </span>
+          </button>
+        </div>
       </div>
     </header>
 
-    <!-- Contenido principal -->
     <main class="flex-grow">
       <slot />
     </main>
 
-    <!-- Footer profesional -->
-    <footer class="bg-navy-900 text-white py-16">
+    <footer class="bg-navy-900 dark:bg-gray-950 text-white py-16">
       <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
         <div>
           <div class="flex items-center gap-3 mb-6">
@@ -81,11 +80,8 @@ const { title, description = 'Colegio Experimental Hugo Dávila - Sitio Oficial'
               <p class="text-xs text-gray-400">Desde 1952</p>
             </div>
           </div>
-          <p class="text-sm text-gray-300 leading-relaxed">
-            Formando líderes con excelencia académica y valores.
-          </p>
+          <p class="text-sm text-gray-300 leading-relaxed">Formando líderes con excelencia académica y valores.</p>
         </div>
-        
         <div>
           <h3 class="font-semibold text-gold mb-6 text-sm uppercase tracking-wider">Navegación</h3>
           <ul class="space-y-3">
@@ -94,7 +90,6 @@ const { title, description = 'Colegio Experimental Hugo Dávila - Sitio Oficial'
             <li><a href="/comunicados" class="text-sm text-gray-300 hover:text-white transition-colors">Comunicados</a></li>
           </ul>
         </div>
-        
         <div>
           <h3 class="font-semibold text-gold mb-6 text-sm uppercase tracking-wider">Contacto</h3>
           <div class="space-y-3 text-sm text-gray-300">
@@ -103,28 +98,35 @@ const { title, description = 'Colegio Experimental Hugo Dávila - Sitio Oficial'
             <p>✉️ info@hugodavila.edu.bo</p>
           </div>
         </div>
-        
         <div>
           <h3 class="font-semibold text-gold mb-6 text-sm uppercase tracking-wider">Dirección</h3>
           <div class="space-y-2 text-sm text-gray-300">
             <p><span class="text-white font-medium">T.M.:</span> Lic. Juan Rivera</p>
-            <p><span class="text-white font-medium">T.T.:</span> Lic. Juan Iturri</p>
           </div>
         </div>
       </div>
-      
       <div class="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-white/10 text-center">
         <p class="text-xs text-gray-400">&copy; {new Date().getFullYear()} Colegio Experimental Hugo Dávila. Todos los derechos reservados.</p>
       </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- AOS y Toggle seguros -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-      AOS.init({
-        duration: 800,
-        once: true,
-        offset: 100
+      document.addEventListener('DOMContentLoaded', function () {
+        const aos = typeof window !== 'undefined' ? (window as any).AOS : undefined;
+        if (typeof aos !== 'undefined') {
+          aos.init({ duration: 800, once: true, offset: 100 });
+        }
+
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+          themeToggle.addEventListener('click', function () {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+          });
+        }
       });
     </script>
   </body>
