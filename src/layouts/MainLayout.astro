@@ -45,7 +45,7 @@ const { title, description = 'Colegio Experimental Hugo Dávila - Sitio Oficial'
     
     <header id="mainHeader" class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 shadow-sm">
       <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
-        <button id="menuTrigger" class="flex items-center gap-3 md:gap-4 group focus:outline-none" aria-label="Menú">
+        <a href="/" class="flex items-center gap-3 md:gap-4 group">
           <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white dark:bg-gray-800 border-2 border-navy-900 dark:border-gold overflow-hidden p-1 shadow-md group-hover:scale-105 transition-transform duration-300">
             <img src="/images/HugoDavila.png" alt="Logo" class="w-full h-full object-contain" />
           </div>
@@ -53,7 +53,7 @@ const { title, description = 'Colegio Experimental Hugo Dávila - Sitio Oficial'
             <h1 class="text-sm md:text-lg font-serif font-bold text-navy-900 dark:text-white leading-tight">Colegio Experimental</h1>
             <p class="text-[10px] md:text-xs text-navy-800 dark:text-gold font-medium tracking-wide">HUGO DÁVILA</p>
           </div>
-        </button>
+        </a>
         
         <nav class="hidden md:flex items-center gap-8">
           <a href="/" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-navy-900 dark:hover:text-gold transition-colors">Inicio</a>
@@ -95,7 +95,6 @@ const { title, description = 'Colegio Experimental Hugo Dávila - Sitio Oficial'
       <slot />
     </main>
 
-    <!-- Footer simplificado y centrado -->
     <footer class="bg-navy-900 dark:bg-gray-950 text-white py-12">
       <div class="max-w-3xl mx-auto px-4 text-center space-y-4">
         <div class="flex items-center justify-center gap-3 mb-4">
@@ -120,6 +119,27 @@ const { title, description = 'Colegio Experimental Hugo Dávila - Sitio Oficial'
       </div>
     </footer>
 
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+
+        // Redirigir al admin después de aceptar invitación o recuperar contraseña
+        window.netlifyIdentity.on("signup", () => {
+          document.location.href = "/admin/";
+        });
+
+        window.netlifyIdentity.on("recover", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    </script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
@@ -140,7 +160,6 @@ const { title, description = 'Colegio Experimental Hugo Dávila - Sitio Oficial'
         const mobileMenu = document.getElementById('mobileMenu');
         const hamburgerIcon = document.getElementById('hamburgerIcon');
         const closeIcon = document.getElementById('closeIcon');
-        const menuTrigger = document.getElementById('menuTrigger');
         const mobileLinks = document.querySelectorAll('.mobile-link');
 
         function closeMenu() {
@@ -157,10 +176,6 @@ const { title, description = 'Colegio Experimental Hugo Dávila - Sitio Oficial'
 
         if (hamburgerBtn) {
           hamburgerBtn.addEventListener('click', toggleMenu);
-        }
-
-        if (menuTrigger) {
-          menuTrigger.addEventListener('click', toggleMenu);
         }
 
         mobileLinks.forEach(link => {
