@@ -1,15 +1,17 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import { marked } from 'marked';
 
 export async function getStaticPaths() {
   const comunicados = await Astro.glob('../../content/comunicados/*.md');
   return comunicados.map(comunicado => {
-    const contenido = comunicado.rawContent?.() || comunicado.compiledContent?.() || '';
+    const rawContent = comunicado.rawContent?.() || '';
+    const contenidoHTML = marked(rawContent);
     return {
       params: { slug: comunicado.file.split('/').pop()?.replace('.md', '') },
       props: {
         frontmatter: comunicado.frontmatter,
-        contenido: contenido,
+        contenido: contenidoHTML,
         image: comunicado.frontmatter.image || null,
       },
     };
@@ -36,13 +38,8 @@ const { frontmatter, contenido, image } = Astro.props;
       <img src={image} alt={frontmatter.title} 
            class="w-full h-64 object-cover rounded-2xl mb-8 shadow" />
     )}
-    <div class="text-gray-700 dark:text-gray-300 leading-relaxed" set:html={
-      contenido
-        .trim()
-        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-[#0A2342] dark:text-white">$1</strong>')
-        .split('\n\n')
-        .map(block => block.trim() ? `<p class="mb-4">${block.replace(/\n/g, '<br>')}</p>` : '')
-        .join('')
-    } />
+    <div class="prose dark:prose-invert max-w-none prose-headings:text-[#0A2342] dark:prose-headings:text-white prose-strong:text-[#0A2342] dark:prose-strong:text-white prose-a:text-[#C5A86D]">
+      <Fragment set:html={contenido} />
+    </div>
   </article>
 </MainLayout>
