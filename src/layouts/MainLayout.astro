@@ -119,27 +119,18 @@ const { title, description = 'Colegio Experimental Hugo Dávila - Sitio Oficial'
       </div>
     </footer>
 
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-
-        // Redirigir al admin después de aceptar invitación o recuperar contraseña
-        window.netlifyIdentity.on("signup", () => {
-          document.location.href = "/admin/";
-        });
-
-        window.netlifyIdentity.on("recover", () => {
-          document.location.href = "/admin/";
-        });
-      }
+      (function() {
+        const hash = window.location.hash;
+        
+        // Si hay un token de invitación, confirmación o recuperación
+        if (hash.includes('invite_token=') || hash.includes('confirmation_token=') || hash.includes('recovery_token=')) {
+          // Redirigir al panel de admin con el hash intacto
+          window.location.href = '/admin/' + hash;
+        }
+      })();
     </script>
+    
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
