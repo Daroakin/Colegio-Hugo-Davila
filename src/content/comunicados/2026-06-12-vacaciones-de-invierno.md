@@ -1,6 +1,6 @@
 ---
 title: VACACIONES DE INVIERNO
-date: 2026-06-12T16:45:34.001Z
+date: 2026-06-29T16:45:34.001Z
 ---
 Por medio del presente, se les informa que, con el objetivo de resguardar la salud de nuestros estudiantes ante las bajas temperaturas, el periodo de Vacaciones de Invierno iniciará oficialmente el próximo:
 
