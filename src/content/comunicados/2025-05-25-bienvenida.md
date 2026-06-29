@@ -1,6 +1,6 @@
 ---
-title: "Bienvenidos al nuevo sitio web"
-date: 2025-05-25T12:00:00
+title: Bienvenidos al nuevo sitio web
+date: 2025-05-05T16:00:00.000Z
 image: ""
 ---
 
